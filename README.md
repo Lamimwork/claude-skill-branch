@@ -1,50 +1,51 @@
-# Skill galho 🌳🌿
+# Branch skill 🌳🌿
 
-Skill para o [Claude Code](https://claude.com/claude-code) que transforma uma conversa em **checklist** e deixa você resolver pontos dela em **conversas separadas** (galhos), sem perder o fio da conversa principal (o tronco).
+A skill for [Claude Code](https://claude.com/claude-code) that turns a conversation into a **checklist** and lets you resolve its points in **separate conversations** (branches), without losing the thread of the main conversation (the trunk).
 
-Tudo fica registrado num mapa mental, o `arvore.md`, que você abre com a extensão Markmap no VS Code e clica para pular de uma conversa para outra.
+Everything is recorded in a mind map, `tree.md`, which you open with the Markmap extension in VS Code and click to jump from one conversation to another.
 
+```text
+🌳 New website: home page             ← trunk conversation
+├─ [x] Define the color palette
+├─ [ ] Logo size in the header
+│   └─ 🌿 Branch 1: logo proportion on mobile   ← separate conversation, open
+└─ [ ] Heading typography
+    └─ ✅ Branch 2: heading font                ← already resolved, with conclusion
 ```
-🌳 Site novo: página inicial          ← conversa-tronco
-├─ [x] Definir paleta de cores
-├─ [ ] Tamanho da logo no topo
-│   └─ 🌿 Galho 1: proporção no celular   ← conversa à parte, aberta
-└─ [ ] Tipografia dos títulos
-    └─ ✅ Galho 2: fonte dos títulos      ← já resolvido, com conclusão
-```
 
-## Requisitos
+## Requirements
 
-- **VS Code** com a extensão do **Claude Code** (os links `vscode://anthropic.claude-code/open` abrem conversas nela).
-- Comando `code` no PATH (o instalador do VS Code oferece; no Mac: *Shell Command: Install 'code' command in PATH*).
+- **VS Code** with the **Claude Code** extension (the `vscode://anthropic.claude-code/open` links open conversations in it).
+- The `code` command on your PATH (the VS Code installer offers it; on Mac: *Shell Command: Install 'code' command in PATH*).
 - **Python 3.8+**.
-- Extensão **Markmap** no VS Code, para ver o `arvore.md` como mapa mental (opcional, mas é a graça).
+- The **Markmap** extension in VS Code, to view `tree.md` as a mind map (optional, but that's the fun part).
 
-## Instalação
+## Installation
 
-Copie a pasta `galho/` para uma destas:
+Copy the `branch/` folder to one of these:
 
-- `~/.claude/skills/galho/` — vale para todos os seus projetos;
-- `<seu projeto>/.claude/skills/galho/` — só para aquele projeto.
+- `~/.claude/skills/branch/` — available in all your projects;
+- `<your project>/.claude/skills/branch/` — only in that project.
 
 ```bash
-git clone https://github.com/Lamimwork/skill-galho-arvore-checklist.git
-cp -r skill-galho-arvore-checklist/galho ~/.claude/skills/
+git clone https://github.com/Lamimwork/claude-skill-branch.git
+cp -r claude-skill-branch/branch ~/.claude/skills/
 ```
 
-## Como usar
+## Usage
 
-| Comando | Onde | O que faz |
+| Command | Where | What it does |
 | --- | --- | --- |
-| `/galho` (ou `/galho <trecho>`) | conversa-tronco | Monta a checklist do tema, mostra para você aprovar, grava o galho no `arvore.md` e abre uma conversa nova já com o contexto preenchido (é só apertar Enter). |
-| `/galho continuar` | conversa do galho | Já vem no texto preenchido; liga a conversa nova ao mapa. |
-| `/galho fechar` | conversa do galho | Resume a conclusão, marca ✅ no mapa e devolve o resumo para colar no tronco. |
-| `/galho abrir N` / `/galho tronco` | qualquer uma | Abre a conversa do galho N ou do tronco. |
+| `/branch` (or `/branch <excerpt>`) | trunk conversation | Builds the topic's checklist, shows it for your approval, records the branch in `tree.md` and opens a new conversation with the context pre-filled (just press Enter). |
+| `/branch tree [point]` | any | Branches straight from a point already in `tree.md`, skipping the checklist and the confirmation. |
+| `/branch continue` | branch conversation | Comes in the pre-filled text; links the new conversation to the map. |
+| `/branch close` | branch conversation | Summarizes the conclusion, marks ✅ on the map and gives back the summary to paste into the trunk. |
+| `/branch open N` / `/branch trunk` | any | Opens the conversation of branch N or of the trunk. |
 
-Quando uma árvore fica sem nenhum galho aberto, ela sai do `arvore.md` sozinha.
+When a tree has no open branch left, it leaves `tree.md` on its own.
 
-## Observações
+## Notes
 
-- O link clicado **dentro do painel do chat** não abre nada; ele funciona pelo terminal (`code --open-url`) e clicado no Markmap. A skill já usa o terminal.
-- O script acha as conversas em `~/.claude/projects/<pasta do projeto>/`. Se não achar, passe `--pasta <caminho>` ou defina `GALHO_PASTA_SESSOES`.
-- A skill está em português.
+- A link clicked **inside the chat panel** does nothing; it works from the terminal (`code --open-url`) and when clicked in Markmap. The skill already uses the terminal.
+- The script finds conversations in `~/.claude/projects/<project folder>/`. If it can't, pass `--dir <path>` or set `BRANCH_SESSIONS_DIR`.
+- This skill was previously named `galho` (Portuguese for "branch"); the old Portuguese version is in the git history.
