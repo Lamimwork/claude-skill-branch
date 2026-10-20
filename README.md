@@ -28,8 +28,8 @@ Copy the `branch/` folder to one of these:
 - `<your project>/.claude/skills/branch/` — only in that project.
 
 ```bash
-git clone https://github.com/Lamimwork/skill-galho-arvore-checklist.git
-cp -r skill-galho-arvore-checklist/branch ~/.claude/skills/
+git clone https://github.com/Lamimwork/claude-skill-branch.git
+cp -r claude-skill-branch/branch ~/.claude/skills/
 ```
 
 ## Usage
