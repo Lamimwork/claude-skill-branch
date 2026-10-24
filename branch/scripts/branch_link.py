@@ -1,5 +1,6 @@
-"""Claude Code VS Code extension links, for the branch skill.
+"""Environment, session id and Claude Code VS Code extension links, for the branch skill.
 
+  python branch_link.py env                        vscode, web or other (where this conversation runs)
   python branch_link.py session                    id of the current conversation
   python branch_link.py link --session ID          link that opens a conversation
   python branch_link.py link --prompt-file FILE    link that opens a new conversation with the text pre-filled
@@ -8,7 +9,7 @@
 The sessions folder is the one of the open project (current directory). To use another:
   --dir PATH, or the BRANCH_SESSIONS_DIR environment variable.
 
-The pre-filled text is not sent: the user checks it and presses Enter.
+Links only exist in VS Code. The pre-filled text is not sent: the user checks it and presses Enter.
 """
 import argparse
 import os
@@ -40,7 +41,17 @@ def sessions_dir(path=None):
     return PROJECTS / name
 
 
+def environment():
+    if os.environ.get("CLAUDE_CODE_REMOTE"):
+        return "web"
+    if os.environ.get("CLAUDE_CODE_ENTRYPOINT") == "claude-vscode":
+        return "vscode"
+    return "other"
+
+
 def current_session(path=None):
+    if not path and os.environ.get("CLAUDE_CODE_SESSION_ID"):
+        return os.environ["CLAUDE_CODE_SESSION_ID"]
     folder = sessions_dir(path)
     files = sorted(folder.glob("*.jsonl"), key=lambda p: p.stat().st_mtime, reverse=True)
     if not files:
@@ -61,6 +72,7 @@ def main():
     sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
+    sub.add_parser("env")
     ss = sub.add_parser("session")
     ss.add_argument("--dir")
     lk = sub.add_parser("link")
@@ -68,6 +80,10 @@ def main():
     lk.add_argument("--prompt-file")
     lk.add_argument("--open", action="store_true")
     a = ap.parse_args()
+
+    if a.cmd == "env":
+        print(environment())
+        return
 
     if a.cmd == "session":
         print(current_session(a.dir))
